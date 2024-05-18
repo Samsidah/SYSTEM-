@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #232C27; 
+}
+
+h1 {
+    text-align: center;
+    color: #C0C0C0;
+    margin-bottom: 40px; /* Adjusted margin to add space below the header */
+}
+
+section {
+    margin-bottom: 40px;
+    text-align: center; 
+}
+
+#propertyForm, #editPropertyForm {
+    background-color: #FFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width: 45%; 
+    display: inline-block; 
+    vertical-align: top; 
+    margin-right: 20px; 
+}
+
+#propertyForm h2, #editPropertyForm h2 {
+    color: #000080;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
+#propertyForm label, #editPropertyForm label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+#propertyForm input[type="number"],
+#propertyForm input[type="text"],
+#editPropertyForm input[type="number"],
+#editPropertyForm input[type="text"] {
+    width: calc(100% - 12px); 
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+    margin-bottom: 10px;
+}
+
+#propertyForm button, #editPropertyForm button {
+    background-color: #228B22	; 
+    color: #fff; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block; 
+    margin: auto; 
+}
+
+#propertyForm button:hover, #editPropertyForm button:hover {
+    background-color: #232C27;
+}
+
+#propertyList {
+    background-color: #fff; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width: 80%;
+    margin: auto;
+    margin-bottom: 40px;
+    clear: both; 
+    overflow: auto;
+    text-align: center;
+}
+
+#propertyList h2 {
+    color: #000080; 
+    margin-bottom: 10px;
+}
+
+#propertyTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#propertyTable th,
+#propertyTable td {
+    padding: 8px;
+    border: 1px solid #ddd; 
+}
+
+#propertyTable th {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: center;
+}
+
+#propertyTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#propertyTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    display: inline-block;
+    background-color: #8B0000;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #232C27;
+}
+

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Own & Seek</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>SEEK & OWN</h1>
+
+    <section id="propertyList">
+        <h2>All Properties</h2>
+        <table id="propertyTable">
+            <thead>
+                <tr>
+                    <th>Property ID</th>
+                    <th>Name</th>
+                    <th>Price ($)</th>
+                    <th>Location</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody id="propertyTableBody">
+            </tbody>
+        </table>
+    </section>
+
+    <section id="propertyForm">
+        <h2>Add a Property</h2>
+        <form id="addPropertyForm">
+            <label for="propertyName">Property Name:</label>
+            <input type="text" id="propertyName" name="propertyName" required><br><br>
+            <label for="propertyPrice">Price ($):</label>
+            <input type="number" id="propertyPrice" name="propertyPrice" required><br><br>
+            <label for="propertyLocation">Location:</label>
+            <input type="text" id="propertyLocation" name="propertyLocation" required><br><br>
+            <button type="submit">Add Property</button>
+        </form>
+    </section>
+
+    <section id="editPropertyForm">
+        <h2>Edit a Property</h2>
+        <form id="editPropertyForm">
+            <label for="editPropertyId">Enter ID:</label>
+            <input type="number" id="editPropertyId" name="editPropertyId" required><br><br>
+            <label for="editPropertyName">Property Name:</label>
+            <input type="text" id="editPropertyName" name="editPropertyName" required><br><br>
+            <label for="editPropertyPrice">Price ($):</label>
+            <input type="number" id="editPropertyPrice" name="editPropertyPrice" required><br><br>
+            <label for="editPropertyLocation">Location:</label>
+            <input type="text" id="editPropertyLocation" name="editPropertyLocation" required><br><br>
+            <button type="button" onclick="savePropertyDetails()">Save</button>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('http://localhost:3000/properties');
+            const propertyData = await response.json();
+            
+            const propertyTableBody = document.getElementById('propertyTableBody');
+            propertyData.forEach(property => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${property.ID}</td>
+                    <td>${property.PropertyName}</td>
+                    <td>${property.PropertyPrice}</td>
+                    <td>${property.PropertyLocation}</td>
+                    <td><button onclick="deleteProperty(${property.ID})">Delete</button></td>
+                `;
+                propertyTableBody.appendChild(row);
+            });
+        });
+
+        document.getElementById('addPropertyForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); 
+            const name = document.getElementById('propertyName').value;
+            const price = document.getElementById('propertyPrice').value;
+            const location = document.getElementById('propertyLocation').value;
+    
+            try {
+                const response = await fetch('http://localhost:3000/properties', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, price, location })
+                });
+                if (response.ok) {
+                    console.log('Property added successfully');
+                    window.location.reload(); // Ensure window object is used
+                } else {
+                    const errorMessage = await response.text();
+                    alert(errorMessage); 
+                    console.error('Failed to add property:', errorMessage);
+                }
+            } catch (error) {
+                console.error('Error adding property:', error.message);
+            }
+        });
+
+        async function deleteProperty(propertyId) {
+            try {
+                const response = await fetch(`http://localhost:3000/properties/${propertyId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    console.log('Property deleted successfully');
+                    window.location.reload(); // Ensure window object is used
+                } else {
+                    const errorMessage = await response.text();
+                    console.error('Failed to delete property:', errorMessage);
+                }
+            } catch (error) {
+                console.error('Error deleting property:', error.message);
+            }
+        }
+
+        async function savePropertyDetails() {
+            console.log('Save button clicked'); 
+            const propertyId = document.getElementById('editPropertyId').value;
+            const name = document.getElementById('editPropertyName').value;
+            const price = document.getElementById('editPropertyPrice').value;
+            const location = document.getElementById('editPropertyLocation').value;
+            
+            try {
+                console.log('Attempting to send PUT request'); 
+                const response = await fetch(`http://localhost:3000/properties/${propertyId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, price, location })
+                });
+                console.log('Response received:', response); 
+                if (response.ok) {
+                    console.log('Property details updated successfully');
+                    window.location.reload(); // Ensure window object is used
+                } else {
+                    const errorMessage = await response.text();
+                    console.error('Failed to update property details:', errorMessage);
+                }
+            } catch (error) {
+                console.error('Error updating property details:', error.message);
+            }
+        }
+    </script>
+</body>
+</html>
